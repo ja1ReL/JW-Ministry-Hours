@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Tells the browser that this document uses HTML5. -->
+    <meta charset="UTF-8">
+
+    <!-- Makes the page scale properly on phones and other screen sizes. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Connects this HTML file to our CSS file. -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Sets the text shown in the browser tab. -->
+    <title>JW Ministry Hours</title>
+</head>
+
+<body>
+
+    <!-- Contains the main content of our application. -->
+    <main>
+
+        <!-- Contains the title of our application. -->
+        <header>
+
+            <!-- Displays the main heading. -->
+            <h1>JW Ministry Hours</h1>
+
+        </header>
+
+
+        <!-- Displays which month we are currently looking at. -->
+        <h2>August 2026</h2>
+
+
+        <!-- Displays the total number of hours. -->
+        <p>
+            Total hours:
+            <span id="totalHours">0</span>
+        </p>
+
+
+        <!-- Contains the form for adding a new volunteer entry. -->
+        <section>
+
+            <!-- Heading for the form. -->
+            <h2>Add Ministry Hours</h2>
+
+
+            <!-- Label describing the date input. -->
+            <label for="dateInput">Date</label>
+
+            <!-- Allows the user to select the date of their ministry. -->
+            <input type="date" id="dateInput">
+
+
+            <!-- Label describing the hours input. -->
+            <label for="hoursInput">Hours</label>
+
+            <!-- Allows the user to enter the number of hours. -->
+            <input type="number" id="hoursInput">
+
+
+            <!-- Label describing the description input. -->
+            <label for="descriptionInput">Description</label>
+
+            <!-- Allows the user to describe the ministry activity. -->
+            <input type="text" id="descriptionInput">
+
+
+            <!-- Button that will eventually add the entry. -->
+            <button id="addHoursButton">Add Hours</button>
+
+        </section>
+
+
+        <!-- Contains the table displaying our volunteer entries. -->
+        <table>
+
+            <!-- Contains the headings for each column. -->
+            <thead>
+
+                <!-- Creates a row for the table headings. -->
+                <tr>
+
+                    <!-- Heading for the date column. -->
+                    <th>Date</th>
+
+                    <!-- Heading for the hours column. -->
+                    <th>Hours</th>
+
+                    <!-- Heading for the description column. -->
+                    <th>Description</th>
+
+                </tr>
+
+            </thead>
+
+
+            <!-- Contains the actual volunteer entries. -->
+            <tbody id="entriesTableBody">
+
+                <!-- JavaScript will add rows here. -->
+
+            </tbody>
+
+        </table>
+
+    </main>
+
+
+    <!-- Loads our JavaScript after the HTML has been created. -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
