@@ -1,0 +1,162 @@
+body {
+    font-family: Arial, sans-serif; /* Use a clean, easy-to-read font. */
+    background-color: #f4f6f8; /* Give the page a light gray background. */
+    margin: 0; /* Remove the browser's default outer spacing. */
+    padding: 20px; /* Add space around the application. */
+    color: #222; /* Set the main text color. */
+}
+
+main {
+    max-width: 900px; /* Prevent the app from becoming excessively wide. */
+    margin: 0 auto; /* Center the app horizontally. */
+}
+
+.month-navigation {
+    display: flex; /* Put the buttons and month title in one row. */
+    align-items: center; /* Vertically align everything. */
+    justify-content: center; /* Center the whole navigation. */
+    gap: 20px; /* Add space between each element. */
+    margin: 20px 0; /* Add space above and below the navigation. */
+}
+
+.month-navigation h2 {
+    margin: 0; /* Remove the browser's default heading margin. */
+    min-width: 180px; /* Keep the month title from jumping around in width. */
+    text-align: center; /* Center the month name. */
+}
+
+.month-navigation button {
+    width: 40px; /* Give the buttons a consistent width. */
+    height: 40px; /* Give the buttons a consistent height. */
+    font-size: 20px; /* Make the arrows easier to see. */
+    cursor: pointer; /* Show that the buttons can be clicked. */
+}
+
+.total-hours {
+    display: flex; /* Put the label and number in one row. */
+    align-items: center; /* Vertically align the label and number. */
+    justify-content: space-between; /* Push the number toward the right. */
+    background-color: white; /* Give the total its own card background. */
+    padding: 18px 20px; /* Add comfortable space inside the card. */
+    margin-bottom: 20px; /* Add space between the total and the form. */
+    border-radius: 12px; /* Round the corners of the card. */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Add a subtle shadow. */
+}
+
+.total-hours strong {
+    font-size: 24px; /* Make the total number more prominent. */
+}
+
+.hours-form {
+    background-color: white; /* Give the form a white card background. */
+    padding: 25px; /* Add space inside the card. */
+    border-radius: 12px; /* Round the corners of the card. */
+    margin-bottom: 30px; /* Add space below the card. */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Add a subtle shadow around the card. */
+
+    display: grid; /* Use CSS Grid to arrange the form fields. */
+    grid-template-columns: 1fr 1fr 2fr auto; /* Give Date and Hours equal space, Description twice as much, and the button its natural size. */
+    gap: 15px; /* Add space between each field and the button. */
+    align-items: end; /* Align the bottom of all fields and the button. */
+}
+
+.hours-form h2 {
+    grid-column: 1 / -1; /* Make the heading stretch across the entire row. */
+    margin: 0; /* Remove the default margin around the heading. */
+}
+
+.form-field {
+    display: flex; /* Use Flexbox to arrange the label and input. */
+    flex-direction: column; /* Put the label above the input. */
+    gap: 5px; /* Add a small gap between the label and input. */
+}
+
+.form-field input {
+    box-sizing: border-box; /* Make padding and borders count toward the input's width. */
+    width: 100%; /* Make the input fill the available space. */
+    padding: 10px; /* Add comfortable space inside the input. */
+    border: 1px solid #ccc; /* Give the input a light border. */
+    border-radius: 6px; /* Slightly round the input corners. */
+    font-size: 16px; /* Make the input text easy to read. */
+}
+
+.form-field textarea {
+    box-sizing: border-box; /* Make padding and borders count toward the textarea's width. */
+    width: 100%; /* Make the textarea fill the available space. */
+    min-height: 40px; /* Give the textarea the same starting height as the other inputs. */
+    padding: 10px; /* Add comfortable space inside the textarea. */
+    border: 1px solid #ccc; /* Give the textarea a light border. */
+    border-radius: 6px; /* Slightly round the textarea corners. */
+    font-size: 16px; /* Make the text easy to read. */
+    resize: vertical; /* Allow the user to manually make it taller. */
+    font-family: inherit; /* Use the same font as the rest of the page. */
+}
+
+button {
+    border: none; /* Remove the browser's default button border. */
+    border-radius: 6px; /* Slightly round the button corners. */
+    padding: 9px 14px; /* Give the button comfortable spacing. */
+    font-size: 14px; /* Set a clean button text size. */
+    cursor: pointer; /* Show that the button can be clicked. */
+}
+
+.action-cell {
+    display: flex; /* Put the action buttons beside each other. */
+    gap: 8px; /* Add space between the buttons. */
+}
+
+table {
+    width: 100%; /* Make the table fill the available width. */
+    border-collapse: collapse; /* Remove gaps between table borders. */
+    background-color: white; /* Give the table a white background. */
+    border-radius: 12px; /* Round the corners of the table. */
+    overflow: hidden; /* Keep the table contents inside the rounded corners. */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Add a subtle shadow around the table. */
+}
+
+th,
+td {
+    padding: 14px 16px; /* Add comfortable spacing inside each cell. */
+    text-align: left; /* Align the text to the left. */
+    border-bottom: 1px solid #eee; /* Separate each row with a subtle line. */
+}
+
+th {
+    background-color: #f8f9fa; /* Give the header a slightly different background. */
+    font-weight: 600; /* Make the column headings stand out. */
+}
+
+tr:last-child td {
+    border-bottom: none; /* Remove the bottom border from the last row. */
+}
+.empty-message {
+    text-align: center; /* Center the message across the entire table cell. */
+    padding: 30px; /* Give the message some breathing room. */
+}
+
+.edit-modal {
+    display: none; /* Hide the edit window when the page first loads. */
+    
+    position: fixed; /* Keep the window fixed relative to the screen. */
+    
+    top: 0; /* Start at the top of the screen. */
+    left: 0; /* Start at the left of the screen. */
+    
+    width: 100%; /* Cover the entire width of the screen. */
+    height: 100%; /* Cover the entire height of the screen. */
+    
+    background-color: rgba(0, 0, 0, 0.5); /* Darken the background behind the window. */
+    
+    justify-content: center; /* Center the window horizontally. */
+    align-items: center; /* Center the window vertically. */
+}
+
+.edit-modal-content {
+    background-color: white; /* Give the edit window a white background. */
+    
+    padding: 20px; /* Add space inside the window. */
+    
+    width: 300px; /* Give the window a reasonable width. */
+    
+    border-radius: 10px; /* Round the corners of the window. */
+}

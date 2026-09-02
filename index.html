@@ -28,50 +28,48 @@
 
         </header>
 
+        <div class="month-navigation"> <!-- Groups the month controls together. -->
 
-        <!-- Displays which month we are currently looking at. -->
-        <h2>August 2026</h2>
+    <button id="previousMonthButton">&lt;</button> <!-- Goes to the previous month. -->
 
+    <h2 id="monthTitle"></h2> <!-- Displays the current month. -->
 
-        <!-- Displays the total number of hours. -->
-        <p>
-            Total hours:
-            <span id="totalHours">0</span>
-        </p>
+    <button id="nextMonthButton">&gt;</button> <!-- Goes to the next month. -->
 
-
-        <!-- Contains the form for adding a new volunteer entry. -->
-        <section>
-
-            <!-- Heading for the form. -->
-            <h2>Add Ministry Hours</h2>
+            </div>
 
 
-            <!-- Label describing the date input. -->
-            <label for="dateInput">Date</label>
+        <div class="total-hours"> <!-- Contains the monthly total. -->
 
-            <!-- Allows the user to select the date of their ministry. -->
-            <input type="date" id="dateInput">
+    <span>Total hours</span> <!-- Displays the label. -->
 
+    <strong id="totalHours">0</strong> <!-- Displays the actual number of hours. -->
 
-            <!-- Label describing the hours input. -->
-            <label for="hoursInput">Hours</label>
-
-            <!-- Allows the user to enter the number of hours. -->
-            <input type="number" id="hoursInput">
+</div>
 
 
-            <!-- Label describing the description input. -->
-            <label for="descriptionInput">Description</label>
+        <section class="hours-form"> <!-- Contains the Add Ministry Hours form. -->
 
-            <!-- Allows the user to describe the ministry activity. -->
-            <input type="text" id="descriptionInput">
+    <h2>Add Ministry Hours</h2> <!-- Displays the form heading. -->
 
+    <div class="form-field"> <!-- Groups the Date label and input together. -->
+        <label for="dateInput">Date</label> <!-- Describes the date input. -->
+        <input type="date" id="dateInput"> <!-- Allows the user to select a date. -->
+    </div>
 
-            <!-- Button that will eventually add the entry. -->
-            <button id="addHoursButton">Add Hours</button>
+    <div class="form-field"> <!-- Groups the Hours label and input together. -->
+        <label for="hoursInput">Hours</label> <!-- Describes the hours input. -->
+        <input type="number" id="hoursInput"> <!-- Allows the user to enter hours. -->
+    </div>
 
-        </section>
+    <div class="form-field"> <!-- Groups the Description label and input together. -->
+        <label for="descriptionInput">Description</label> <!-- Describes the description input. -->
+        <textarea id="descriptionInput" rows="1"></textarea> <!-- Allows longer descriptions and can grow vertically. -->
+    </div>
+
+    <button id="addHoursButton">Add Hours</button> <!-- Adds the new entry. -->
+
+</section>
 
 
         <!-- Contains the table displaying our volunteer entries. -->
@@ -92,6 +90,8 @@
                     <!-- Heading for the description column. -->
                     <th>Description</th>
 
+                     <th></th> 
+
                 </tr>
 
             </thead>
@@ -107,6 +107,29 @@
         </table>
 
     </main>
+
+    <div id="editModal" class="edit-modal"> <!-- The edit window container. -->
+
+    <div class="edit-modal-content"> <!-- The actual box that appears inside the window. -->
+
+        <button id="closeEditModal">X</button> <!-- Button to close the edit window. -->
+
+        <h2>Edit Entry</h2> <!-- Title of the edit window. -->
+
+        <label for="editDateInput">Date</label> <!-- Label for the date input. -->
+        <input type="date" id="editDateInput"> <!-- Date input for editing. -->
+
+        <label for="editHoursInput">Hours</label> <!-- Label for the hours input. -->
+        <input type="number" id="editHoursInput"> <!-- Hours input for editing. -->
+
+        <label for="editDescriptionInput">Description</label> <!-- Label for the description input. -->
+        <input type="text" id="editDescriptionInput"> <!-- Description input for editing. -->
+
+        <button id="saveEditButton">Save Changes</button> <!-- Button to save the edit. -->
+
+    </div>
+
+</div>
 
 
     <!-- Loads our JavaScript after the HTML has been created. -->
