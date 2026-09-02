@@ -1,3 +1,117 @@
+body {
+    font-family: Arial, sans-serif; /* Use the same clean font as the main app. */
+    background-color: #f4f6f8; /* Give the page a light gray background. */
+    margin: 0; /* Remove the browser's default margin. */
+    min-height: 100vh; /* Make the page at least as tall as the screen. */
+    display: flex; /* Use Flexbox to position the login box. */
+    justify-content: center; /* Center the login box horizontally. */
+    align-items: center; /* Center the login box vertically. */
+    padding: 20px; /* Keep the box away from the screen edges. */
+    box-sizing: border-box; /* Include padding in the page's total size. */
+}
+
+#loginSection,
+#signupSection {
+    width: 100%; /* Allow the form to use the available width. */
+    max-width: 360px; /* Prevent the form from becoming too wide. */
+    background-color: white; /* Give the form a white card background. */
+    padding: 30px; /* Add comfortable space inside the card. */
+    border-radius: 12px; /* Round the corners of the card. */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Add a subtle shadow around the card. */
+    box-sizing: border-box; /* Include padding in the card's width. */
+}
+
 #signupSection {
     display: none; /* Hide the signup section when the page first loads. */
+}
+
+#loginSection h2,
+#signupSection h2 {
+    margin: 0 0 24px; /* Remove the default margin and add space below the heading. */
+    text-align: center; /* Center the heading. */
+    font-size: 24px; /* Give the heading a clear size. */
+    font-weight: 600; /* Make the heading prominent without being too heavy. */
+}
+
+.form-field {
+    display: flex; /* Use Flexbox for each form field. */
+    flex-direction: column; /* Put the label above the input. */
+    gap: 6px; /* Add a small gap between the label and input. */
+    margin-bottom: 16px; /* Add space between form fields. */
+}
+
+.form-field label {
+    font-size: 14px; /* Keep labels slightly smaller than the inputs. */
+    color: #444; /* Make the labels slightly softer than the main text. */
+}
+
+.form-field input {
+    box-sizing: border-box; /* Include padding and border in the input width. */
+    width: 100%; /* Make the input fill the form. */
+    padding: 11px; /* Add comfortable space inside the input. */
+    border: 1px solid #ccc; /* Give the input a subtle border. */
+    border-radius: 6px; /* Slightly round the input corners. */
+    font-size: 16px; /* Make the input text easy to read. */
+}
+
+#loginSection > button,
+#signupSection > button {
+    width: 100%; /* Make the main button fill the form width. */
+    padding: 11px; /* Give the button a comfortable clickable area. */
+    background-color: #222; /* Give the main action button a strong appearance. */
+    color: white; /* Make the button text easy to read. */
+}
+
+#loginSection > button:hover,
+#signupSection > button:hover {
+    background-color: #444; /* Slightly lighten the button when hovered. */
+}
+
+#loginSection p,
+#signupSection p {
+    margin: 20px 0 0; /* Add space above the account-switching text. */
+    text-align: center; /* Center the text below the form. */
+    font-size: 14px; /* Keep the text secondary. */
+    color: #666; /* Make the text less visually prominent. */
+}
+
+#showSignupButton,
+#showLoginButton {
+    padding: 0; /* Remove the normal button spacing. */
+    background: none; /* Remove the button background. */
+    color: #222; /* Give the button dark text. */
+    text-decoration: underline; /* Make it look like a text link. */
+}
+
+#showSignupButton:hover,
+#showLoginButton:hover {
+    color: #666; /* Lighten the text when hovered. */
+}
+
+.password-field {
+    position: relative; /* Give the eye button a reference point for positioning. */
+    width: 100%; /* Make the password field fill the available width. */
+}
+
+.password-field input {
+    box-sizing: border-box; /* Include padding and border in the input's width. */
+    width: 100%; /* Make the input fill the entire password field. */
+    padding: 11px 45px 11px 11px; /* Leave extra space on the right for the eye. */
+    border: 1px solid #ccc; /* Give the input a subtle border. */
+    border-radius: 6px; /* Slightly round the input corners. */
+    font-size: 16px; /* Make the password text easy to read. */
+}
+
+.password-field button {
+    position: absolute; /* Position the eye independently inside the field. */
+    top: 50%; /* Move the eye halfway down the input. */
+    right: 10px; /* Place the eye near the right edge. */
+    transform: translateY(-50%); /* Center the eye vertically. */
+    padding: 0; /* Remove unnecessary button spacing. */
+    background: none; /* Remove the button background. */
+    color: #666; /* Give the eye a subtle color. */
+}
+
+.password-field button:hover {
+    color: #222; /* Darken the eye when the mouse hovers over it. */
 }
