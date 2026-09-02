@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"> <!-- Tell the browser to use UTF-8 text encoding. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make the page responsive. -->
+    <title>JW Ministry Hours - Log In</title> <!-- Set the browser tab title. -->
+    <link rel="stylesheet" href="login.css"> <!-- Connect the login page to its own CSS file. -->
+</head>
+
+<body>
+    <section id="loginSection"> <!-- Contains everything related to logging in. -->
+
+    <h2>Log In</h2> <!-- Displays the login heading. -->
+
+    <div class="form-field"> <!-- Groups the email label and input together. -->
+        <label for="emailInput">Email</label> <!-- Describes the email input. -->
+        <input type="email" id="emailInput"> <!-- Allows the user to enter their email address. -->
+    </div>
+
+    <div class="form-field"> <!-- Groups the password label and input together. -->
+        <label for="passwordInput">Password</label> <!-- Describes the password input. -->
+        <input type="password" id="passwordInput"> <!-- Allows the user to enter their password. -->
+    </div>
+
+    <button id="loginButton">Log In</button> <!-- Starts the login process. -->
+
+    <p>
+        Don't have an account?
+        <button id="showSignupButton">Sign Up</button> <!-- Switches to the signup form. -->
+    </p>
+</section>
+<section id="signupSection">
+    <h2>Sign Up</h2>
+
+    <div class="form-field"> <!-- Groups the email label and input together. -->
+        <label for="emailSignUpInput">Email</label> <!-- Describes the email input. -->
+        <input type="email" id="emailSignUpInput"> <!-- Allows the user to enter their email address. -->
+    </div>
+
+    <div class="form-field"> <!-- Groups the password label and input together. -->
+        <label for="passwordSignUpInput">Password</label> <!-- Describes the password input. -->
+        <input type="password" id="passwordSignUpInput"> <!-- Allows the user to enter their password. -->
+    </div>
+
+    <div class="form-field"> <!-- Groups the password label and input together. -->
+        <label for="confirmPasswordInput">Confirm Password</label> <!-- Describes the password input. -->
+        <input type="password" id="confirmPasswordInput"> <!-- Allows the user to enter their password. -->
+    </div>
+
+    <button id="signUpButton">Sign Up</button> <!-- Starts the signup process. -->
+
+    <p>
+    Already have an account?
+    <button id="showLoginButton">Log In</button>
+</p>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> <!-- Load the Supabase JavaScript library. -->
+<script src="login.js"></script> <!-- Load our login page JavaScript. -->
+</body>
+
+</html>

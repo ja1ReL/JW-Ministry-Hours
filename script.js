@@ -2,23 +2,36 @@ const supabaseUrl = "https://aqbtnrrjmlfcawgopxjb.supabase.co"; // Store your Su
 const supabaseKey = "sb_publishable_8ZtZTh_YlKnF1qwoOJTWMg_xiePdk44"; // Store your Supabase publishable key.
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey); // Create a connection between our website and Supabase.
 
-const emailInput = document.getElementById("emailInput"); // Find the email input from the HTML.
-const passwordInput = document.getElementById("passwordInput"); // Find the password input from the HTML.
-const loginButton = document.getElementById("loginButton"); // Find the Log In button from the HTML.
+const checkUser = async () => { // Create a function that checks whether someone is logged in.
 
-loginButton.addEventListener("click", async () => { // Run this function when the user clicks Log In.
+    const { data: { user } } = await supabaseClient.auth.getUser(); // Ask Supabase for the currently logged-in user.
 
-    const email = emailInput.value; // Get the email entered by the user.
-    const password = passwordInput.value; // Get the password entered by the user.
+    if (!user) { // Check whether there is no logged-in user.
+        window.location.href = "login.html"; // Send the user to the login page.
+        return; // Stop the function.
+    }
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({ // Ask Supabase to log the user in.
-        email: email, // Send the entered email to Supabase.
-        password: password // Send the entered password to Supabase.
-    });
+    const userEmail = document.getElementById("userEmail"); // Find the element where we will display the user's email.
+    userEmail.textContent = user.email; // Put the logged-in user's email into that element.
+    console.log("Logged-in user:", user); // Show the logged-in user's information in the console.
+    loadEntries();
+};
 
-    console.log("Login data:", data); // Show the login result in the console.
-    console.log("Login error:", error); // Show any login error in the console.
+checkUser(); // Run the login check when the app loads.
 
+const logoutButton = document.getElementById("logoutButton"); // Find the Log Out button.
+logoutButton.addEventListener("click", async () => { // Run this when the user clicks Log Out.
+
+    const { error } = await supabaseClient.auth.signOut(); // Ask Supabase to log the current user out.
+
+    console.log("Logout error:", error); // Show any logout error in the console.
+
+    if (error) { // Check whether the logout failed.
+        alert("Could not log out."); // Tell the user something went wrong.
+        return; // Stop the function.
+    }
+
+    window.location.href = "login.html"; // Send the user back to the login page.
 });
 
 const entries = []; // Create an empty array that will hold entries loaded from Supabase.
@@ -178,7 +191,7 @@ const displayEntry = (entry) => { // Create a function that displays one entry i
         .from("entries")
         .delete()
         .eq("id", entry.id)
-        
+
         console.log("Delete error:", error); // Show any error from Supabase.
 
     if (error) { // Check whether Supabase reported an error.
@@ -344,4 +357,3 @@ monthTitle.textContent = new Date(currentMonth).toLocaleString("en-US", { // Set
     year: "numeric"
 });     
 displayMonth(); // Display the current month's entries when the page loads.
-loadEntries(); // Run the function that loads entries from Supabase.

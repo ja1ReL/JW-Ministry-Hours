@@ -11,6 +11,24 @@ main {
     margin: 0 auto; /* Center the app horizontally. */
 }
 
+header {
+    display: flex; /* Put the title and user controls on the same row. */
+    align-items: center; /* Vertically center everything in the header. */
+    justify-content: space-between; /* Push the title left and controls right. */
+    margin-bottom: 20px; /* Add some space below the header. */
+}
+
+header > div {
+    display: flex; /* Put the email and logout button on the same row. */
+    align-items: center; /* Vertically center the email and button. */
+    gap: 12px; /* Add space between the email and button. */
+}
+
+#userEmail {
+    font-size: 14px; /* Make the email slightly smaller than the title. */
+    color: #666; /* Make the email less visually prominent. */
+}
+
 .month-navigation {
     display: flex; /* Put the buttons and month title in one row. */
     align-items: center; /* Vertically align everything. */
@@ -160,4 +178,17 @@ tr:last-child td {
     width: 300px; /* Give the window a reasonable width. */
     
     border-radius: 10px; /* Round the corners of the window. */
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column; /* Stack the title and user controls vertically. */
+        gap: 10px; /* Add some space between them. */
+        text-align: center; /* Center the header content. */
+    }
+
+    header > div {
+        flex-wrap: wrap; /* Allow the email and button to wrap if needed. */
+        justify-content: center; /* Center the user controls. */
+    }
 }
