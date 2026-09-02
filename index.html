@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> <!-- Supabase Database Password: "HoursRegularPioneer" -->
 <html lang="en">
 
 <head>
@@ -16,6 +16,24 @@
 </head>
 
 <body>
+
+<section id="loginSection"> <!-- Contains everything related to logging in. -->
+
+    <h2>Log In</h2> <!-- Displays the login heading. -->
+
+    <div class="form-field"> <!-- Groups the email label and input together. -->
+        <label for="emailInput">Email</label> <!-- Describes the email input. -->
+        <input type="email" id="emailInput"> <!-- Allows the user to enter their email address. -->
+    </div>
+
+    <div class="form-field"> <!-- Groups the password label and input together. -->
+        <label for="passwordInput">Password</label> <!-- Describes the password input. -->
+        <input type="password" id="passwordInput"> <!-- Allows the user to enter their password while hiding the characters. -->
+    </div>
+
+    <button id="loginButton">Log In</button> <!-- Starts the login process when clicked. -->
+
+</section>
 
     <!-- Contains the main content of our application. -->
     <main>
@@ -132,8 +150,8 @@
 </div>
 
 
-    <!-- Loads our JavaScript after the HTML has been created. -->
-    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> <!-- Loads the Supabase JavaScript library. -->
+    <script src="script.js"></script> <!-- Loads our own JavaScript after Supabase is available. -->
 
 </body>
 

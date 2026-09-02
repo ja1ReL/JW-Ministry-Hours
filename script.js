@@ -1,25 +1,55 @@
-const entries = [
-    {
-        date: "2026-08-01", 
-        hours: 3, 
-        description: "Los Baños ministry"
-    },
-    {
-        date: "2026-08-02", 
-        hours: 2, 
-        description: "Los Baños ministry" 
-    },
-    {
-        date: "2026-08-05", 
-        hours: 2, 
-        description: "Bay ministry" 
-    },
-    {
-        date: "2026-08-21", 
-        hours: 7, 
-        description: "Calamba ministry" 
+const supabaseUrl = "https://aqbtnrrjmlfcawgopxjb.supabase.co"; // Store your Supabase project URL.
+const supabaseKey = "sb_publishable_8ZtZTh_YlKnF1qwoOJTWMg_xiePdk44"; // Store your Supabase publishable key.
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey); // Create a connection between our website and Supabase.
+
+const emailInput = document.getElementById("emailInput"); // Find the email input from the HTML.
+const passwordInput = document.getElementById("passwordInput"); // Find the password input from the HTML.
+const loginButton = document.getElementById("loginButton"); // Find the Log In button from the HTML.
+
+loginButton.addEventListener("click", async () => { // Run this function when the user clicks Log In.
+
+    const email = emailInput.value; // Get the email entered by the user.
+    const password = passwordInput.value; // Get the password entered by the user.
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ // Ask Supabase to log the user in.
+        email: email, // Send the entered email to Supabase.
+        password: password // Send the entered password to Supabase.
+    });
+
+    console.log("Login data:", data); // Show the login result in the console.
+    console.log("Login error:", error); // Show any login error in the console.
+
+});
+
+const entries = []; // Create an empty array that will hold entries loaded from Supabase.
+
+const loadEntries = async () => { // Create a function that loads entries from Supabase.
+
+    const { data: { user } } = await supabaseClient.auth.getUser(); // Get the currently logged-in user.
+
+    if (!user) { // Check if there is no logged-in user.
+        console.log("No user is logged in."); // Tell us in the console that there is no logged-in user.
+        return; // Stop the function.
     }
-];
+
+    console.log("Logged-in user ID:", user.id); // Show the user's unique ID in the console.
+
+    const { data, error } = await supabaseClient // Ask Supabase for entries.
+        .from("entries") // Tell Supabase which table we want.
+        .select("*") // Ask for all columns.
+        .eq("user_id", user.id); // Only request rows belonging to this user.
+
+    console.log("Database entries:", data); // Show the entries Supabase returned.
+    console.log("Database error:", error); // Show any error Supabase returned.
+
+    if (error) { // Check whether the database request failed.
+        return; // Stop if there was an error.
+    }
+
+    entries.push(...data); // Put the database entries into our local entries array.
+
+    displayMonth(); // Refresh the table using the entries we just loaded.
+};
 
 const today = new Date(); // Get today's date.
 let currentMonth = today.toISOString().slice(0, 7); // Get the current month in YYYY-MM format.
@@ -138,11 +168,23 @@ const displayEntry = (entry) => { // Create a function that displays one entry i
         editModal.style.display = "flex"; // Show the edit modal.
     });
 
-    deleteButton.addEventListener("click", () => { // Listen for a click on Delete.
+    deleteButton.addEventListener("click", async () => { // Listen for a click on Delete.
 
         console.log("Delete clicked"); // Show that Delete was clicked.
         const confirmed = confirm("Are you sure you want to delete this entry?"); // Ask the user to confirm the deletion.
         if (!confirmed) return; // Stop here if the user clicks Cancel.
+
+        const {error} = await supabaseClient 
+        .from("entries")
+        .delete()
+        .eq("id", entry.id)
+        
+        console.log("Delete error:", error); // Show any error from Supabase.
+
+    if (error) { // Check whether Supabase reported an error.
+        alert("Could not delete the entry."); // Tell the user that the delete failed.
+        return; // Stop so we don't change the page incorrectly.
+    }
 
         const entryIndex = entries.indexOf(entry); // Find the position of this entry in the array.
         console.log("Entry:", entry, entryIndex); // Show the entry and its index.
@@ -195,7 +237,7 @@ const validateInputs = (date, hours, description) => { // Create a function that
         description.value === "" // Check if the description is empty.
     ) {
         return false; // Return false if any input is invalid.
-    }
+    } 
 
     return true; // Return true if all inputs are valid.
 };
@@ -209,7 +251,7 @@ closeEditModal.addEventListener("click", () => { // Listen for a click on the X 
     editingRow = null; // Forget the row being edited.
 });
 
-saveEditButton.addEventListener("click", () => { // Listen for a click on Save Changes.
+saveEditButton.addEventListener("click", async () => { // Listen for a click on Save Changes and allow us to use await.
 
     if (editingEntry === null) return; // Stop if there is no entry being edited.
 
@@ -220,42 +262,73 @@ saveEditButton.addEventListener("click", () => { // Listen for a click on Save C
         return; // Stop the save process.
     }
 
-    editingEntry.date = editDateInput.value; // Replace the old date with the edited date.
+    const { data, error } = await supabaseClient // Ask Supabase to update the entry.
 
-    editingEntry.hours = Number(editHoursInput.value); // Replace the old hours with the edited hours.
+        .from("entries") // Tell Supabase which table we want to update.
+        .update({ // Tell Supabase which values should be changed.
+            date: editDateInput.value, // Send the new date.
+            hours: Number(editHoursInput.value), // Send the new hours as a number.
+            description: editDescriptionInput.value // Send the new description.
+        })
+        .eq("id", editingEntry.id) // Find the specific database entry using its ID.
+        .select() // Ask Supabase to return the updated entry.
+        .single(); // Return the updated entry as one object.
 
-    editingEntry.description = editDescriptionInput.value; // Replace the old description.
+    console.log("Updated entry:", data); // Show the updated entry in the console.
+    console.log("Update error:", error); // Show any error from Supabase.
+
+    if (error) { // Check whether Supabase reported an error.
+        alert("Could not update the entry."); // Tell the user that the update failed.
+        return; // Stop so we don't change the page incorrectly.
+    }
+
+    editingEntry.date = data.date; // Update the local entry with the new date.
+    editingEntry.hours = data.hours; // Update the local entry with the new hours.
+    editingEntry.description = data.description; // Update the local entry with the new description.
 
     displayMonth(); // Refresh the table and total in case the month changed.
 
     editModal.style.display = "none"; // Hide the edit modal.
-
     editingEntry = null; // Exit edit mode.
-
     editingRow = null; // Forget the row being edited.
 });
 
 const addHoursButton = document.getElementById("addHoursButton"); // Find the Add Hours button.
 
-addHoursButton.addEventListener("click", () => { // Listen for a click on Add Hours.
-
+addHoursButton.addEventListener("click", async () => { // Listen for a click on Add Hours.
     if (!validateInputs(dateInput, hoursInput, descriptionInput)) { // Check whether the inputs are valid.
-
         alert("Please fill in all fields."); // Tell the user what went wrong.
+        return; // Stop the function.
+    }
 
+    const { data: { user } } = await supabaseClient.auth.getUser(); // Get the currently logged-in user.
+    if (!user) { // Make sure a user is actually logged in.
+        console.log("No user is logged in."); // Tell us why the entry cannot be saved.
         return; // Stop the function.
     }
 
     const newEntry = { // Create a new ministry entry.
-
+        user_id: user.id, // Store the logged-in user's ID as the owner of this entry.
         date: dateInput.value, // Get the date from the input.
-
         hours: Number(hoursInput.value), // Get the hours and convert them to a number.
-
         description: descriptionInput.value // Get the description from the input.
     };
 
-    entries.push(newEntry); // Add the new entry to the entries array.
+      const { data, error } = await supabaseClient // Send the new entry to Supabase.
+        .from("entries") // Tell Supabase which table we want to use.
+        .insert(newEntry) // Insert the new entry into the table.
+        .select() // Ask Supabase to return the entry it just created.
+        .single(); // Return the new entry as one object.
+
+        console.log("Inserted entry:", data); // Show the newly inserted entry in the console.
+        console.log("Insert error:", error); // Show any error from Supabase.
+
+         if (error) { // Check whether Supabase reported an error.
+        alert("Could not save the entry."); // Tell the user that saving failed.
+        return; // Stop the function so we don't update the page incorrectly.
+    }
+
+    entries.push(data); // Add the new entry to the entries array.
 
     displayMonth(); // Refresh the table and total for the current month.
 
@@ -271,3 +344,4 @@ monthTitle.textContent = new Date(currentMonth).toLocaleString("en-US", { // Set
     year: "numeric"
 });     
 displayMonth(); // Display the current month's entries when the page loads.
+loadEntries(); // Run the function that loads entries from Supabase.

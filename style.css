@@ -129,6 +129,7 @@ th {
 tr:last-child td {
     border-bottom: none; /* Remove the bottom border from the last row. */
 }
+
 .empty-message {
     text-align: center; /* Center the message across the entire table cell. */
     padding: 30px; /* Give the message some breathing room. */
