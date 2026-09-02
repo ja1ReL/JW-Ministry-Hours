@@ -68,7 +68,7 @@ const today = new Date(); // Get today's date.
 let currentMonth = today.toISOString().slice(0, 7); // Get the current month in YYYY-MM format.
 
 const totalHoursElement = document.getElementById("totalHours"); // Find the total hours element.
-const tableBody = document.getElementById("entriesTableBody"); // Find the table body.
+const entriesList = document.getElementById("entriesList"); // Find the table body.
 const monthTitle = document.getElementById("monthTitle"); // Find the month title.
 const previousMonthButton = document.getElementById("previousMonthButton"); // Find the previous month button.
 const nextMonthButton = document.getElementById("nextMonthButton"); // Find the next month button.
@@ -87,26 +87,30 @@ const updateTotalHours = (entriesArray) => { // Create a function to calculate a
 
 const displayMonth = () => { // Display all entries belonging to the current month.
 
-    tableBody.innerHTML = ""; // Clear the table before displaying the current month.
+    entriesList.innerHTML = ""; // Clear the entry cards before displaying the current month.
 
     const monthlyEntries = entries.filter((entry) => { // Find entries belonging to the current month.
         return entry.date.startsWith(currentMonth); // Check whether the entry starts with the current month.
     });
 
     if (monthlyEntries.length === 0) { // Check if there are no entries for the current month.
-    const row = document.createElement("tr"); // Create a table row.
-    const cell = document.createElement("td"); // Create a table cell.
-    cell.textContent = "No ministry hours recorded for this month."; // Display a message when the month is empty.
-    cell.colSpan = 4; // Make the message span across all four table columns.
-    cell.classList.add("empty-message"); // Give the empty-state cell its own CSS class.
-    row.appendChild(cell); // Put the cell inside the row.
-    tableBody.appendChild(row); // Put the row inside the table.
-    } else {
-    monthlyEntries.forEach((entry) => { // Go through every entry belonging to the current month.
-        displayEntry(entry); // Display that entry in the table.
-    });
 
-}
+        const emptyMessage = document.createElement("div"); // Create a div for the empty-state message.
+
+        emptyMessage.textContent = "No ministry hours recorded for this month."; // Display the message.
+
+        emptyMessage.classList.add("empty-message"); // Give the message its own CSS class.
+
+        entriesList.appendChild(emptyMessage); // Put the message inside the entries container.
+
+    } else {
+
+        monthlyEntries.forEach((entry) => { // Go through every entry belonging to the current month.
+
+            displayEntry(entry); // Create a card for that entry.
+
+        });
+    }
     updateTotalHours(monthlyEntries); // Calculate the total only for the current month.
 };
 
@@ -135,7 +139,6 @@ nextMonthButton.addEventListener("click", () => { // Listen for a click on the n
 });
 
 let editingEntry = null; // Store the entry currently being edited.
-let editingRow = null; // Store the table row currently being edited.
 
 const formatDate = (dateString) => { // Convert the stored date into a readable date.
     const date = new Date(`${dateString}T00:00:00`); // Create a date without timezone shifting.
@@ -147,22 +150,33 @@ const formatDate = (dateString) => { // Convert the stored date into a readable 
     });
 };
 
-const displayEntry = (entry) => { // Create a function that displays one entry in the table.
+const displayEntry = (entry) => { // Create a card that displays one ministry entry.
 
-    const row = document.createElement("tr"); // Create a new table row.
+    const card = document.createElement("div"); // Create the main card container.
+    card.classList.add("entry-card"); // Give the card a CSS class.
 
-    const dateCell = document.createElement("td"); // Create a cell for the date.
-    const hoursCell = document.createElement("td"); // Create a cell for the hours.
-    const descriptionCell = document.createElement("td"); // Create a cell for the description.
-    const actionCell = document.createElement("td"); // Create a cell for the buttons.
-    actionCell.classList.add("action-cell"); // Give the action cell its own class.
+    const topRow = document.createElement("div"); // Create the top section of the card.
+    topRow.classList.add("entry-top"); // Give the top section a CSS class.
+
+    const dateElement = document.createElement("span"); // Create an element for the date.
+    dateElement.classList.add("date-cell"); // Give the date its own CSS class.
+
+    const hoursElement = document.createElement("span"); // Create an element for the hours.
+    hoursElement.classList.add("hours-cell"); // Give the hours its own CSS class.
+
+    const descriptionElement = document.createElement("p"); // Create a paragraph for the description.
+    descriptionElement.classList.add("description-cell"); // Give the description its own CSS class.
+
+    const actionElement = document.createElement("div"); // Create a container for the buttons.
+    actionElement.classList.add("action-cell"); // Give the button container its own CSS class.
 
     const editButton = document.createElement("button"); // Create the Edit button.
     const deleteButton = document.createElement("button"); // Create the Delete button.
 
-    dateCell.textContent = formatDate(entry.date); // Put the entry date into the date cell. and formatDate makes it readable.
-    hoursCell.textContent = entry.hours; // Put the entry hours into the hours cell.
-    descriptionCell.textContent = entry.description; // Put the entry description into the description cell.
+    dateElement.textContent = formatDate(entry.date); // Display the formatted date.
+    hoursElement.textContent = `${entry.hours} hrs`; // Display the number of hours.
+
+    descriptionElement.textContent = entry.description; // Display the entry description.
 
     editButton.textContent = "Edit"; // Give the Edit button its text.
     deleteButton.textContent = "Delete"; // Give the Delete button its text.
@@ -172,7 +186,6 @@ const displayEntry = (entry) => { // Create a function that displays one entry i
         console.log("Edit clicked"); // Show that Edit was clicked.
 
         editingEntry = entry; // Remember which entry we are editing.
-        editingRow = row; // Remember which row we are editing.
 
         editDateInput.value = entry.date; // Put the entry date into the edit modal.
         editHoursInput.value = entry.hours; // Put the entry hours into the edit modal.
@@ -184,41 +197,44 @@ const displayEntry = (entry) => { // Create a function that displays one entry i
     deleteButton.addEventListener("click", async () => { // Listen for a click on Delete.
 
         console.log("Delete clicked"); // Show that Delete was clicked.
+
         const confirmed = confirm("Are you sure you want to delete this entry?"); // Ask the user to confirm the deletion.
+
         if (!confirmed) return; // Stop here if the user clicks Cancel.
 
-        const {error} = await supabaseClient 
-        .from("entries")
-        .delete()
-        .eq("id", entry.id)
+        const { error } = await supabaseClient // Ask Supabase to delete the entry.
+            .from("entries") // Tell Supabase which table we want.
+            .delete() // Tell Supabase to delete a row.
+            .eq("id", entry.id); // Find the specific entry using its ID.
 
         console.log("Delete error:", error); // Show any error from Supabase.
 
-    if (error) { // Check whether Supabase reported an error.
-        alert("Could not delete the entry."); // Tell the user that the delete failed.
-        return; // Stop so we don't change the page incorrectly.
-    }
+        if (error) { // Check whether Supabase reported an error.
+
+            alert("Could not delete the entry."); // Tell the user that the delete failed.
+
+            return; // Stop so we don't change the page incorrectly.
+        }
 
         const entryIndex = entries.indexOf(entry); // Find the position of this entry in the array.
-        console.log("Entry:", entry, entryIndex); // Show the entry and its index.
-        console.log("Index:", entryIndex); // Show the index.
 
         entries.splice(entryIndex, 1); // Remove the entry from the array.
 
-        displayMonth(); // Refresh the table and total for the current month.
+        displayMonth(); // Refresh the cards and total for the current month.
     });
 
-    actionCell.appendChild(editButton); // Put the Edit button inside the action cell.
-    actionCell.appendChild(deleteButton); // Put the Delete button inside the action cell.
+    actionElement.appendChild(editButton); // Put the Edit button inside the action container.
+    actionElement.appendChild(deleteButton); // Put the Delete button inside the action container.
 
-    row.appendChild(dateCell); // Put the date cell inside the row.
-    row.appendChild(hoursCell); // Put the hours cell inside the row.
-    row.appendChild(descriptionCell); // Put the description cell inside the row.
-    row.appendChild(actionCell); // Put the action cell inside the row.
+    topRow.appendChild(dateElement); // Put the date into the top row.
+    topRow.appendChild(hoursElement); // Put the hours into the top row.
 
-    tableBody.appendChild(row); // Put the completed row inside the table body.
+    card.appendChild(topRow); // Put the top row inside the card.
+    card.appendChild(descriptionElement); // Put the description inside the card.
+    card.appendChild(actionElement); // Put the buttons inside the card.
+
+    entriesList.appendChild(card); // Put the completed card inside the entries list.
 };
-
 const dateInput = document.getElementById("dateInput"); // Find the date input.
 const hoursInput = document.getElementById("hoursInput"); // Find the hours input.
 const descriptionInput = document.getElementById("descriptionInput"); // Find the description input.
@@ -261,7 +277,6 @@ closeEditModal.addEventListener("click", () => { // Listen for a click on the X 
 
     editingEntry = null; // Exit edit mode.
 
-    editingRow = null; // Forget the row being edited.
 });
 
 saveEditButton.addEventListener("click", async () => { // Listen for a click on Save Changes and allow us to use await.
@@ -303,7 +318,6 @@ saveEditButton.addEventListener("click", async () => { // Listen for a click on 
 
     editModal.style.display = "none"; // Hide the edit modal.
     editingEntry = null; // Exit edit mode.
-    editingRow = null; // Forget the row being edited.
 });
 
 const addHoursButton = document.getElementById("addHoursButton"); // Find the Add Hours button.

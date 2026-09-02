@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif; /* Use a clean, easy-to-read font. */
     background-color: #f4f6f8; /* Give the page a light gray background. */
     margin: 0; /* Remove the browser's default outer spacing. */
-    padding: 20px; /* Add space around the application. */
+    padding: 30px 20px; /* Add comfortable space around the application. */
     color: #222; /* Set the main text color. */
 }
 
@@ -15,7 +15,13 @@ header {
     display: flex; /* Put the title and user controls on the same row. */
     align-items: center; /* Vertically center everything in the header. */
     justify-content: space-between; /* Push the title left and controls right. */
-    margin-bottom: 20px; /* Add some space below the header. */
+    margin-bottom: 30px; /* Add some space below the header. */
+}
+
+header h1 {
+    margin: 0; /* Remove the browser's default heading margin. */
+    font-size: 28px; /* Give the application title a strong but reasonable size. */
+    font-weight: 600; /* Make the title prominent without being overly bold. */
 }
 
 header > div {
@@ -30,57 +36,72 @@ header > div {
 }
 
 .month-navigation {
-    display: flex; /* Put the buttons and month title in one row. */
+    display: flex; /* Put the previous button, month title, and next button in one row. */
+    justify-content: center; /* Center the entire navigation group. */
     align-items: center; /* Vertically align everything. */
-    justify-content: center; /* Center the whole navigation. */
-    gap: 20px; /* Add space between each element. */
-    margin: 20px 0; /* Add space above and below the navigation. */
+    gap: 20px; /* Add space between the arrows and month title. */
+    margin: 20px 0 30px; /* Add space above and below the navigation. */
 }
 
 .month-navigation h2 {
     margin: 0; /* Remove the browser's default heading margin. */
-    min-width: 180px; /* Keep the month title from jumping around in width. */
-    text-align: center; /* Center the month name. */
+    min-width: 180px; /* Keep the month title area from changing width between months. */
+    text-align: center; /* Center the month title. */
+    font-size: 22px; /* Give the month title a clear but moderate size. */
 }
 
 .month-navigation button {
-    width: 40px; /* Give the buttons a consistent width. */
-    height: 40px; /* Give the buttons a consistent height. */
-    font-size: 20px; /* Make the arrows easier to see. */
-    cursor: pointer; /* Show that the buttons can be clicked. */
+    width: 36px; /* Give both arrow buttons the same width. */
+    height: 36px; /* Give both arrow buttons the same height. */
+    padding: 0; /* Remove the general button padding so the arrows stay centered. */
+    font-size: 20px; /* Make the arrows easy to see. */
 }
 
 .total-hours {
     display: flex; /* Put the label and number in one row. */
     align-items: center; /* Vertically align the label and number. */
-    justify-content: space-between; /* Push the number toward the right. */
-    background-color: white; /* Give the total its own card background. */
-    padding: 18px 20px; /* Add comfortable space inside the card. */
-    margin-bottom: 20px; /* Add space between the total and the form. */
+    justify-content: space-between; /* Push the total number to the right. */
+    background-color: white; /* Give the total its own white card. */
+    padding: 20px 24px; /* Add comfortable space inside the card. */
+    margin-bottom: 20px; /* Add space below the total card. */
     border-radius: 12px; /* Round the corners of the card. */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Add a subtle shadow. */
 }
 
+.total-hours span {
+    font-size: 14px; /* Make the label slightly smaller. */
+    color: #666; /* Make the label less visually prominent. */
+}
+
 .total-hours strong {
-    font-size: 24px; /* Make the total number more prominent. */
+    font-size: 28px; /* Make the total number stand out more. */
+    font-weight: 600; /* Make the number prominent without being extremely bold. */
 }
 
 .hours-form {
     background-color: white; /* Give the form a white card background. */
-    padding: 25px; /* Add space inside the card. */
+    padding: 24px; /* Add comfortable space inside the card. */
     border-radius: 12px; /* Round the corners of the card. */
-    margin-bottom: 30px; /* Add space below the card. */
+    margin-bottom: 30px; /* Add space below the form. */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Add a subtle shadow around the card. */
 
     display: grid; /* Use CSS Grid to arrange the form fields. */
-    grid-template-columns: 1fr 1fr 2fr auto; /* Give Date and Hours equal space, Description twice as much, and the button its natural size. */
-    gap: 15px; /* Add space between each field and the button. */
-    align-items: end; /* Align the bottom of all fields and the button. */
+    grid-template-columns: 1fr 1fr 2fr auto; /* Give the fields appropriate widths. */
+    gap: 16px; /* Add space between the fields. */
+    align-items: end; /* Align the inputs and button along their bottom edges. */
 }
 
 .hours-form h2 {
-    grid-column: 1 / -1; /* Make the heading stretch across the entire row. */
-    margin: 0; /* Remove the default margin around the heading. */
+    grid-column: 1 / -1; /* Make the heading span the entire form width. */
+    margin: 0 0 4px; /* Remove the default margin and add a tiny gap below it. */
+    font-size: 20px; /* Give the form heading a clear size. */
+    font-weight: 600; /* Make the heading prominent without being too heavy. */
+}
+
+#addHoursButton {
+    height: 40px; /* Match the height of the form inputs. */
+    padding: 0 18px; /* Give the button comfortable horizontal spacing. */
+    white-space: nowrap; /* Keep "Add Hours" on one line. */
 }
 
 .form-field {
@@ -118,77 +139,167 @@ button {
     cursor: pointer; /* Show that the button can be clicked. */
 }
 
+.entries-list {
+    display: flex; /* Arrange all entry cards vertically. */
+    flex-direction: column; /* Stack the cards from top to bottom. */
+    gap: 10px; /* Bring the cards slightly closer together. */
+}
+
+.entry-card {
+    background-color: white; /* Give each entry a white background. */
+    padding: 16px 20px; /* Reduce the empty space inside the card. */
+    border-radius: 10px; /* Slightly reduce the corner rounding. */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Add a subtle shadow around the card. */
+}
+
+.entry-top {
+    display: flex; /* Put the date and hours on the same row. */
+    justify-content: space-between; /* Push the date left and hours right. */
+    align-items: center; /* Vertically align the date and hours. */
+    gap: 15px; /* Add space between them. */
+}
+
+.date-cell {
+    font-size: 20px; /* Make the date easier to see. */
+    font-weight: 600; /* Make the date slightly prominent. */
+}
+
+.hours-cell {
+    font-size: 20px; /* Make the hours easier to see. */
+    font-weight: 600; /* Make the hours slightly prominent. */
+    white-space: nowrap; /* Keep the hours together on one line. */
+}
+
+.description-cell {
+    margin: 10px 0; /* Reduce the vertical space around the description. */
+    line-height: 1.45; /* Keep the description comfortable to read without excessive spacing. */
+    color: #444; /* Make the description slightly softer than the main text. */
+    overflow-wrap: anywhere; /* Allow very long text to wrap when necessary. */
+}
+
 .action-cell {
     display: flex; /* Put the action buttons beside each other. */
+    justify-content: flex-end; /* Move the buttons to the right side of the card. */
     gap: 8px; /* Add space between the buttons. */
 }
 
-table {
-    width: 100%; /* Make the table fill the available width. */
-    border-collapse: collapse; /* Remove gaps between table borders. */
-    background-color: white; /* Give the table a white background. */
-    border-radius: 12px; /* Round the corners of the table. */
-    overflow: hidden; /* Keep the table contents inside the rounded corners. */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Add a subtle shadow around the table. */
-}
-
-th,
-td {
-    padding: 14px 16px; /* Add comfortable spacing inside each cell. */
-    text-align: left; /* Align the text to the left. */
-    border-bottom: 1px solid #eee; /* Separate each row with a subtle line. */
-}
-
-th {
-    background-color: #f8f9fa; /* Give the header a slightly different background. */
-    font-weight: 600; /* Make the column headings stand out. */
-}
-
-tr:last-child td {
-    border-bottom: none; /* Remove the bottom border from the last row. */
+.action-cell button {
+    padding: 8px 14px; /* Give the buttons comfortable clickable areas. */
+    font-size: 13px; /* Keep the button text slightly smaller than the entry text. */
 }
 
 .empty-message {
-    text-align: center; /* Center the message across the entire table cell. */
+    text-align: center; /* Center the empty-state message. */
     padding: 30px; /* Give the message some breathing room. */
+    color: #666; /* Make the message less visually prominent. */
 }
 
 .edit-modal {
     display: none; /* Hide the edit window when the page first loads. */
-    
-    position: fixed; /* Keep the window fixed relative to the screen. */
-    
-    top: 0; /* Start at the top of the screen. */
-    left: 0; /* Start at the left of the screen. */
-    
-    width: 100%; /* Cover the entire width of the screen. */
-    height: 100%; /* Cover the entire height of the screen. */
-    
-    background-color: rgba(0, 0, 0, 0.5); /* Darken the background behind the window. */
-    
-    justify-content: center; /* Center the window horizontally. */
-    align-items: center; /* Center the window vertically. */
+    position: fixed; /* Keep the modal fixed relative to the screen. */
+    inset: 0; /* Make the modal cover the entire screen. */
+    background-color: rgba(0, 0, 0, 0.5); /* Darken the page behind the modal. */
+    justify-content: center; /* Center the modal horizontally. */
+    align-items: center; /* Center the modal vertically. */
+    padding: 20px; /* Keep the modal away from the screen edges. */
+    box-sizing: border-box; /* Include the padding in the modal's total size. */
 }
 
 .edit-modal-content {
-    background-color: white; /* Give the edit window a white background. */
-    
-    padding: 20px; /* Add space inside the window. */
-    
-    width: 300px; /* Give the window a reasonable width. */
-    
-    border-radius: 10px; /* Round the corners of the window. */
+    position: relative; /* Give the close button a positioning reference. */
+    display: flex; /* Use Flexbox to arrange the modal contents. */
+    flex-direction: column; /* Stack the fields vertically. */
+    gap: 8px; /* Add consistent spacing between the fields. */
+    background-color: white; /* Give the modal a white background. */
+    padding: 24px; /* Add comfortable space inside the modal. */
+    width: 100%; /* Allow the modal to use the available width. */
+    max-width: 360px; /* Prevent the modal from becoming too wide. */
+    border-radius: 12px; /* Round the modal corners. */
+    box-sizing: border-box; /* Include padding in the modal's width. */
+}
+
+.edit-modal-content h2 {
+    margin: 0 0 10px; /* Remove the default margin and add space below the heading. */
+    font-size: 20px; /* Give the heading a clear size. */
+    font-weight: 600; /* Make the heading prominent. */
+}
+
+.edit-modal-content input {
+    box-sizing: border-box; /* Include padding and border in the input's width. */
+    width: 100%; /* Make the inputs fill the modal. */
+    padding: 10px; /* Add comfortable space inside the inputs. */
+    margin-bottom: 8px; /* Add space between each field. */
+    border: 1px solid #ccc; /* Give the inputs a subtle border. */
+    border-radius: 6px; /* Slightly round the input corners. */
+    font-size: 16px; /* Make the input text easy to read. */
+}
+
+#closeEditModal {
+    position: absolute; /* Position the button independently from the form fields. */
+    top: 12px; /* Place the button near the top of the modal. */
+    right: 12px; /* Place the button near the right side of the modal. */
+    padding: 4px 8px; /* Give the button a small clickable area. */
+    font-size: 14px; /* Keep the X compact. */
+}
+
+#saveEditButton {
+    margin-top: 8px; /* Add a little space above the save button. */
+    padding: 10px 16px; /* Give the button a comfortable clickable area. */
 }
 
 @media (max-width: 600px) {
+    body {
+        padding: 20px 15px; /* Reduce the page padding so more space is available on small screens. */
+    }
+
     header {
         flex-direction: column; /* Stack the title and user controls vertically. */
-        gap: 10px; /* Add some space between them. */
+        gap: 12px; /* Add space between the title and user controls. */
         text-align: center; /* Center the header content. */
+        margin-bottom: 25px; /* Slightly reduce the space below the header. */
+    }
+
+    header h1 {
+        font-size: 24px; /* Make the title slightly smaller on mobile. */
     }
 
     header > div {
-        flex-wrap: wrap; /* Allow the email and button to wrap if needed. */
+        flex-wrap: wrap; /* Allow the email and logout button to wrap if necessary. */
         justify-content: center; /* Center the user controls. */
     }
+
+    .month-navigation {
+        gap: 12px; /* Reduce the space between the navigation elements. */
+        margin-bottom: 25px; /* Keep comfortable space below the navigation. */
+    }
+
+    .month-navigation h2 {
+        min-width: 150px; /* Give the month title enough room without taking too much space. */
+        font-size: 20px; /* Slightly reduce the month title size. */
+    }
+
+    .hours-form {
+        grid-template-columns: 1fr; /* Put each form field on its own row. */
+        padding: 20px; /* Slightly reduce the form's inner spacing. */
+    }
+
+    .entry-card {
+        padding: 16px; /* Reduce card padding to give the content more room. */
+    }
+
+    .entry-top {
+        align-items: flex-start; /* Align the date and hours toward the top. */
+    }
+
+    .description-cell {
+        margin: 14px 0; /* Slightly reduce the description spacing. */
+    }
+    
+    .date-cell {
+    font-size: 17px; /* Make the date slightly smaller on mobile so it doesn't dominate the card. */
+}
+
+.hours-cell {
+    font-size: 17px; /* Make the hours slightly smaller on mobile while keeping them prominent. */
+}
 }
